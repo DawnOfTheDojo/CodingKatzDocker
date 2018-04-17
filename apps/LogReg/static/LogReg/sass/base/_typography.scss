@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Revalia');
+
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.intro {
+  font-size: 1.5vw;
+  text-align: right;
+  line-height: 2;
+}
+
+h1 {
+  font-size: 3vw;
+  font-family: 'Revalia', cursive;
+  line-height: 1.2;
+
+  // @media screen and (max-width: 1452px) {
+  //   font-size: 1vw;
+  // }
+  // @media screen and (max-width: 1350px) {
+  //   font-size: 3rem;
+  // }
+}
+
+h2 {
+  font-size: 1.5vw;
+  margin-bottom: 1.5rem;
+}

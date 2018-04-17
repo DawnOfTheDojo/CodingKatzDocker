@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %} 
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+  <!-- css stylesheets -->
+  <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
+  <title>{{ user.first_name }}'s Wall</title>
+</head>
+
+<body class="grid">
+  <div class="overlay"></div>
+  <header class="header">
+    <nav class="navbar">
+      <ul class="top-nav">
+        <li class="top-nav__item">
+          <a href="{% url 'Wall:wall' %}" class="top-nav__link">Community Wall</a>
+        </li>
+        <li class="top-nav__item">
+          <a href="{% url 'User:profile' %}" class="top-nav__link"> Edit Profile</a>
+        </li>
+        <li class="top-nav__item">
+          <a href="{% url 'LogReg:logout' %}" class="top-nav__link">Logout</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="header__greeting">
+      <h1>{% if "user" in request.session %}
+        {{ user.first_name }}'{% if user.first_name|last != "s" %}s
+        {% endif %}
+         Wall
+        {% endif %}</h1>
+      <h4>
+        Member Since:
+        <!-- time is showing 3 hours ahead but this fix does not work -->
+        {% load tz %}
+        {% localtime on %}
+        {{user.created_at}}
+        {% endlocaltime %}
+      </h4>
+    </div>
+  </header>
+
+  <div id="main" class="content">
+
+    <section id="note" class="form">
+      <!-- user info then notes and messages -->
+      <h2>Leave a note for {{user.first_name}}</h2>
+      <form action="{% url 'User:note' user.id %}" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <div class="form-group">
+          <label class="flash_messages">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.extra_tags == 'message' %}
+            <p class="error">{{ message }}</p>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </label>            
+        </div>
+        <div class="form-group">
+          <textarea name="note" rows="4" class="message-input"></textarea>
+          <button class="btn btn--blue submit" name="button" value="note_submit" type="submit">Submit</button>
+        </div>
+      </fieldset>
+        </form>
+        
+        <div class="notes">
+          {% for message in all_correspondence %}
+          <div class="note-group">
+            <h5><a href="{% url 'User:show_user' message.author.id %}" class="notes__link">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+            {% if message.message %}
+            <p class="notes">{{ message.message }}</p>
+            {% endif %}
+            {% if message.note %}
+            <p class="notes">{{ message.note }}</p>
+            {% endif %}
+            
+            <div class="comments">
+              <!-- SINGLE COMMENT SECTION -->
+              <div class="comment">
+                {% if comments %}
+                <ul>
+                  {% for comment in comments %} {% if message.id == comment.message.id %}
+                  <li></li>
+                  <h5>
+                    <a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+                    {{ comment.comment }}</li>
+                    {% endif %} {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+                <div class="comment-form">
+                  <h6 class="comment_label">Post a comment</h6>
+                  <form action="{% url 'User:userComment' user_id=user.id message_id=message.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="flash_messages">
+                      {% if messages %}
+                      {% for error in messages%}
+                      {% with error.extra_tags|stringformat:'s' as tag %}
+                      {% with message.id|stringformat:'s' as id %}
+                      {% if tag == id %}
+                      <p class="error">{{ error }}</p>
+                      {% endif %}
+                      {% endwith %}
+                      {% endwith %}
+                      {% endfor %}
+                      {% endif %}
+                    </div>
+                    <div class="form-group">
+                      <textarea name="comment" class="comment-input" rows="1" cols="60"></textarea>
+                      <button class="btn btn--green submit" name="wall_posts" value="comment_submit" type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- CREATE ANCHOR TAG SO THAT WHEN PAGE REFRESHES FOR COMMENT OR ERROR THE PAGE LOADS AT THIS PARTICULAR MESSAGE AND COMMENT BOX -->
+                
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        </body>
+        
+        </html>
+        

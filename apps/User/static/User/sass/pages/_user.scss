@@ -1,0 +1,132 @@
+.grid {
+  display: grid;
+  justify-content: center;
+  grid-template-rows: 20rem 1fr;
+  grid-template-areas: "header" "notes";
+  
+  @media screen and (max-width: 900px) {
+    grid-template-rows: 16vh 1fr;
+  }
+  @media screen and (max-width: 800px) {
+    grid-template-rows: 14vh 1fr;
+  }
+  @media screen and (max-width: 700px) {
+    grid-template-rows: 12vh 1fr;
+  }
+  @media screen and (max-width: 600px) {
+    grid-template-rows: 11vh 1fr;
+  }
+}
+
+.overlay,
+.header {
+  position: fixed;
+  width: 100vw;
+  background-image: url("../img/gathering.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.overlay {
+  height: 100%;
+  z-index: -1;
+}
+
+.header {
+  grid-area: header;
+  z-index: 100;
+
+  @media screen and (max-width: 700px) {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-areas: "navbar" "greeting";
+  }
+}
+
+.content {
+  grid-area: posts;
+  width: 60vw;
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 2rem 5rem;
+  border-radius: 10px;
+  background-color: rgba($color-white, .8);
+  transition: all .1s;
+  
+  @media screen and (max-width: 1000px) {
+    width: 65vw;
+    margin-top: 1rem;
+  }
+  @media screen and (max-width: 900px) {
+    width: 70vw;
+    margin-top: 4rem;
+  }
+  @media screen and (max-width: 800px) {
+    width: 80vw;
+  }
+  @media screen and (max-width: 600px) {
+    width: 90vw;
+  }
+}
+
+
+
+.notes,
+.messages,
+.comments {
+  
+  &__link:link,
+  &__link:visited {
+    color: $color-blue;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    text-decoration: none;
+  }
+  &__link:hover {
+    color: orangered;
+  }
+}
+
+.notes,
+.messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-group {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:first-of-type) {
+    border-top: 2px solid rgba($color-red, .3);
+    padding-top: 1rem;
+  }
+  
+  &:not(:last-of-type) {
+    margin-bottom: 2rem;
+  }
+}
+
+.comments {
+  width: 95%;
+  align-self: flex-end;
+}
+
+.comment {
+  & li {
+    border-top: 2px solid rgba($color-grey-light, .3);
+    margin-top: 1rem;
+  }
+}
+
+.form-group {
+  
+  display: flex;
+  flex-direction: column;
+  
+  & .btn {
+    align-self: flex-end;
+  }
+}

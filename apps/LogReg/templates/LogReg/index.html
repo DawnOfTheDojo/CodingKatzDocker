@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'LogReg/css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'LogReg/css/style.css' %}">
+  <title>Code Social</title>
+</head>
+<body class="container">
+  <div class="overlay"></div>
+  <header class="header">
+    <div class="header__right">
+      <form class="header__form form" action="{% url 'LogReg:login' %}" method="POST">
+        {% csrf_token %}
+        <div class="form__group ">
+          <input name="email" type="email" placeholder="Email" class="form__input">
+          <label class="form__label" for="email">Email</label>
+        </div>
+        <div class="form__group ">
+          <input name="password" type="password" placeholder="Password" class="form__input">
+          <label class="form__label" for="password">Password</label>
+        </div>
+        <div class="form__group ">
+          <button type="submit" class="btn btn--blue" name="attempt" value="login">Sign in</button>
+        </div>
+      </form>
+    </div>
+          {% if messages and request.session.attempt == 'login' %} 
+          <ul>
+             {% for message in messages %}
+             <li class="navError">-{{ message }}</li>
+             {% endfor %}
+          </ul>
+          {% endif %}
+  </header>
+
+
+  <section class="content">
+    <div class="register">
+      <div class="register__form">
+        <form action="{% url 'LogReg:register' %}" method="POST" class="form">
+          {% csrf_token %}
+          <div class="form-header">
+            <h2 class="heading-secondary">New here? Please register and join us!</h2>
+          </div>
+          <div class="form__group">
+            <input id="inputFirstName" type="text" name="first_name" placeholder="First Name" class="form__input" required>
+            <label class="form__label" for="inputFirstName">First Name</label>
+          </div>
+          <div class="form__group">
+            <input id="inputLastName" type="text" name="last_name" placeholder="Last Name" class="form__input" required>
+            <label class="form__label" for="inputLastName">Last Name</label>
+          </div>
+          <div class="form__group">
+            <input id="inputEmail" type="email" name="email" class="form__input" placeholder="Email address" required>
+            <label class="form__label" for="inputEmail">Email address</label>
+          </div>
+          <div class="form__group">
+            <input type="password" name="password" id="inputPassword" class="form__input" placeholder="Password" required>
+            <label class="form__label" for="inputPassword">Password</label>
+          </div>
+          <div class="form__group">
+            <input type="password" name="confirmPassword" id="inputConfirmPassword" class="form__input" placeholder="confirm password entry" required>
+            <label class="form__label" for="inputConfirmPassword">Confirm Password:</label>
+          </div>
+          <div class="form__group">
+            {% if messages and request.session.attempt == 'register' %} {% for message in messages %}
+            <p class="navError">{{ message }}</p>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="form__group">
+            <button type="submit" class="btn btn--blue" name="attempt" value="register">Register</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="intro">
+        <div class="intro__text">
+          <h1>Code Social</h1>
+          <p>A place for Coding Dojo students past and present to socialize and talk about anything and everything, including code.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

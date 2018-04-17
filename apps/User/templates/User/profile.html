@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- css stylesheets -->
+    <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
+    <title>{{user.first_name}}'s Profile - Edit</title>
+  </head>
+  <body class="grid">
+    <div class="overlay"></div>
+    <header class="header">
+      <nav class="navbar">
+        <ul class="top-nav">         
+          <li class="top-nav__item">
+            <a href="{% url 'Wall:wall' %}"" class="top-nav__link"">Community Wall</a>
+          </li>
+          <li class="top-nav__item">
+            <a href="{% url 'User:show_user' user.id %}" class="top-nav__link">My wall</a>
+          </li>
+          <li class="top-nav__item">
+            <a href="{% url 'LogReg:logout' %}"" class="top-nav__link"">Logout</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="header__greeting">
+        <h1>{{user.first_name}}'{% if user.first_name|last != "s" %}s {% endif %} Profile - Edit</h1>
+      </div>
+    </header>
+
+
+    <section class="content">
+      <div class="user-edit">
+        <div class="user-edit__form">
+          <form action="{% url 'User:edit' %}" method="POST" class="form">
+            {% csrf_token %}
+            <div class="form-header">
+              <h2>Edit Your Info</h2>
+            </div>
+            <div class="form__group">
+              <input id="first_name" type="text" name="first_name" value="{{user.first_name}}" class="form__input" autofocus>
+              <label class="form__label" for="first_name">First Name</label>
+            </div>
+            <div class="form__group">
+              <input id="last_name" type="text" name="last_name" value="{{user.last_name}}" class="form__input">
+              <label class="form__label" for="last_name">Last Name</label>
+            </div>
+            <div class="form__group">
+              <input id="email" type="email" name="email" class="form__input" value="{{user.email}}">
+              <label class="form__label" for="email">Email address</label>
+            </div>
+            <div class="form__group">
+              <input type="password" name="password" id="password" class="form__input" placeholder="Password">
+              <label class="form__label" for="password">Password</label>
+            </div>
+            <div class="form__group">
+              <input type="password" name="confirmPassword" id="confirmPassword" class="form__input" placeholder="confirm password entry">
+              <label class="form__label" for="confirmPassword">Confirm Password:</label>
+            </div>
+            <div class="form__group">
+              {% if messages %}
+              {% for message in messages%}
+              <p class="error">{{ message }}</p>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <div class="form__group">
+              <button class="btn btn--blue" type="submit" >Submit</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </section> <!-- /container -->
+
+  </body>
+</html>

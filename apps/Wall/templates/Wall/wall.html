@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- css stylesheets -->
+  <link rel="stylesheet" href="{% static 'wall/css/style.css' %}">
+
+  <title>The Wall</title>
+</head>
+
+<body class="grid">
+  <div class="overlay"></div>
+  <header class="header">
+    <nav class="navbar">
+          <ul class="top-nav">
+            <li class="top-nav__item"><a href="{% url 'User:show_user' user.id %}" class="top-nav__link">My wall</a></li>
+            <li class="top-nav__item"><a href="{% url 'User:profile' %}" class="top-nav__link">Edit Profile</a></li>
+            <li class="top-nav__item"><a href="{% url 'LogReg:logout' %}" class="top-nav__link">Logout</a></li>
+          </ul>
+    </nav>
+    <div class="header__greeting">
+      <h1>The Wall{% if "user" in request.session %} - Hello {{ request.session.user.first_name }} {% endif %}</h1>
+    </div>
+  </header>
+
+  <section id="main" class="content">
+
+    <div id="post" class="form">
+      <form action="{% url 'Wall:message' %}" method="post" class="form-message">
+        {% csrf_token %}
+        <fieldset>
+          <div class="form-group">
+            <label class="flash_messages"><h2>Post a message</h2>
+              {% if messages %}
+              {% for message in messages %}
+              {% if message.extra_tags == 'message' %}
+              <p class="error">{{ message }}</p>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+            </label>
+          </div>
+          <div class="form-group">
+            <textarea rows="4" name="message" class="message-input"></textarea>
+            <button class="btn btn--green submit" name="wall_posts" value="message_submit" type="submit">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+      <div class="messages">
+        <!-- MESSAGE-GROUP -->
+        {% if all_messages %}
+        {% for message in all_messages %}
+        <div class="message-group">
+          <!-- MAIN MESSAGE SECTION -->
+          <h5><a href="{% url 'User:show_user' message.author.id %}" class="messages__link">{{message.author.first_name}} {{message.author.last_name}}</a>  - {{message.created_at|timesince}} ago</h5>
+          <p class="message">{{ message.message }}</p>
+          <!-- END MAIN MESSAGE SECTION -->
+
+          <div class="comments">
+          <!-- SINGLE COMMENT SECTION -->
+            <div class="comment">
+              {% if comments %}
+              <ul>
+                {% for comment in comments %} {% if message.id == comment.message.id %}
+                <li>
+                  <h5>
+                    <a href="{% url 'User:show_user' comment.author.id %}" class="comments__link">{{comment.author.first_name}} {{comment.author.last_name}}</a> - {{comment.created_at|timesince}} ago</h5>
+                  {{ comment.comment }}</li>
+                {% endif %} {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+            <!-- END SINGLE COMMENT SECTION -->
+          <!-- COMMENT FORM -->
+          <div class="comment-form">
+            <h6 class="comment_label">Post a comment</h6>
+            <form action="{% url 'Wall:comment' message_id=message.id %}" method="post">
+              {% csrf_token %}
+              <!-- CREATE ANCHOR TAGS SO WHEN PAGE REFRESHES WITH ERROR OR NEW COMMENT PAGE LOADS TO SHOW ERROR OR NEW COMMENT -->
+              {% if messages %}
+              {% for error in messages%}
+              {% with error.extra_tags|stringformat:'s' as tag %}
+              {% with message.id|stringformat:'s' as id %}
+              {% if tag == id %}
+              <p class="error">{{ error }}</p>
+              {% endif %}
+              {% endwith %}
+              {% endwith %}
+              {% endfor %}
+              {% endif %}
+              <div class="form-group">
+                <textarea rows="1" cols="60" name="comment" class="comment-input"></textarea>
+                <button class="btn btn--green submit" name="wall_posts" value="comment_submit" type="submit">Comment</button>
+              </div>
+            </form>
+          </div>
+          <!-- END COMMENT FORM -->
+          </div>
+      </div>
+      <!-- END MESSAGE-GROUP          -->
+          {% endfor %}
+          {% endif %}
+      </div>
+
+  </section>
+  <!-- /container -->
+
+</body>
+
+</html>

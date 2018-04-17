@@ -1,0 +1,290 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Revalia");
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block; }
+
+ol,
+ul {
+  list-style: none; }
+
+blockquote,
+q {
+  quotes: none; }
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  box-sizing: border-box; }
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  margin: 0; }
+
+.intro {
+  font-size: 1.5vw;
+  text-align: right;
+  line-height: 2; }
+
+h1 {
+  font-size: 3vw;
+  font-family: 'Revalia', cursive;
+  line-height: 1.2; }
+
+h2 {
+  font-size: 1.5vw;
+  margin-bottom: 1.5rem; }
+
+.btn, .btn:link, .btn:visited {
+  text-transform: uppercase;
+  padding: 1.2rem 2rem;
+  display: inline-block;
+  border-radius: 5rem;
+  transition: all .2s;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer; }
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+  .btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0; }
+.btn:active, .btn:focus {
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+.btn--blue {
+  background-color: #0f1fb3;
+  color: #fff; }
+  .btn--blue::after {
+    background-color: #0f1fb3; }
+
+.form__input {
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: inherit;
+  padding: .75rem 1.2rem;
+  border-radius: 2px;
+  background-clip: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-bottom: 3px solid transparent;
+  width: 80%;
+  min-width: 15rem;
+  display: block;
+  transition: all .3s; }
+  .form__input:focus {
+    outline: none;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #0f1fb3; }
+    .form__input:focus:invalid {
+      border-bottom: 3px solid #ff7730; }
+  .form__input::-webkit-input-placeholder {
+    color: #222; }
+.form__label {
+  font-size: 1vw;
+  font-weight: 700;
+  margin-left: 2rem;
+  margin-bottom: .5rem;
+  display: block;
+  transition: all .3s; }
+.form__input:placeholder-shown + .form__label {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4rem); }
+
+.navError {
+  color: red;
+  padding: 0 2rem;
+  max-width: 35rem;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8); }
+
+.error {
+  color: #da1c1c;
+  text-align: right;
+  display: inline; }
+
+.container {
+  display: grid;
+  grid-template-rows: 10vh 1fr;
+  height: 100vh;
+  overflow: hidden; }
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background-image: url(../img/billiards.jpg);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  filter: blur(4px); }
+
+.header {
+  width: 100%;
+  display: grid;
+  justify-content: flex-end;
+  align-items: center; }
+  .header__form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(auto, 1fr));
+    align-items: center; }
+  .header .form__group {
+    display: flex;
+    align-items: center; }
+
+.content {
+  display: grid;
+  justify-content: center;
+  align-content: center; }
+  .content .register {
+    width: 65vw;
+    padding: 2.5rem 4rem;
+    background-image: linear-gradient(105deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(0, 0, 0, 0.9) 50%);
+    border-radius: 5px;
+    height: 50vh;
+    box-shadow: 1.5rem 1.5rem rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-areas: "register intro"; }
+    .content .register__form {
+      grid-area: register; }
+      .content .register__form__group:not(:last-child) {
+        margin-bottom: 1rem; }
+    .content .register .intro {
+      grid-area: intro;
+      color: #fff;
+      margin-left: 5rem;
+      display: grid;
+      justify-content: end;
+      align-content: center; }
+      .content .register .intro h1 {
+        margin-bottom: 3rem; }
+
+/*# sourceMappingURL=style.css.map */
