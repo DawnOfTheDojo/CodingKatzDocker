@@ -62,7 +62,7 @@ def note(request, user_id):
     user = userDB.objects.get(id = user_id)
     all_messages = Message.objects.filter(author=user).order_by('id').reverse()
 
-    all_notes =  Note.objects.filter(recipient=user).order_by('id').reverse()
+    all_notes =  Note.objects.all().order_by('id')
 
     all_user_correspondence = sorted(
     chain(all_notes, all_messages),
